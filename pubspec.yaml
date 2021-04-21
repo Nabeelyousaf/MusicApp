@@ -36,6 +36,7 @@ dependencies:
   firebase_storage: ^8.0.3
   swipedetector: ^1.2.0
   audioplayers: ^0.18.3
+  flutter_swiper: ^1.1.6
 
 dev_dependencies:
   flutter_test:

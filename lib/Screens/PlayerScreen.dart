@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:musicapp/Model/MusicName.dart';
 import 'package:musicapp/widget/CustomTitleText.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -24,11 +25,15 @@ class _PlayerScreenState extends State<PlayerScreen> {
   Duration duration = new Duration();
   Duration position = new Duration();
   bool playing = false;
+  int currentIndex = 0;
+  PageController _controller;
 
   @override
   void initState() {
+    playing = true;
     // TODO: implement initState
     super.initState();
+    _controller = PageController(initialPage: 0);
 
     audioPlayer.onAudioPositionChanged.listen((Duration duration) {
       setState(() {
@@ -52,15 +57,22 @@ class _PlayerScreenState extends State<PlayerScreen> {
     });
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    playing = false;
+    super.dispose();
+  }
+
   void seekToSecond(int second) {
     Duration newDuration = Duration(seconds: second);
 
     audioPlayer.seek(newDuration);
   }
 
-  void getAudio() async {
-    String url = widget.musicUrl;
-    print(widget.musicUrl);
+  void getAudio(String url) async {
+    // String url = widget.musicUrl;
+    // print(widget.musicUrl);
     if (playing) {
       var res = await audioPlayer.pause();
       if (res == 1) {
@@ -69,7 +81,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
         });
       }
     } else {
-      var res = await audioPlayer.play(url, isLocal: true);
+      var res = await audioPlayer.play(
+        url,
+        isLocal: true,
+      );
       if (res == 1) {
         setState(() {
           playing = true;
@@ -78,16 +93,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
     }
   }
 
-  // String getTimeString(int milliseconds) {
-  //   String minutes =
-  //       "${(milliseconds / 60000).floor() < 10 ? 0 : ""}${(milliseconds / 60000).floor()}";
-  //   String seconds =
-  //       "${(milliseconds / 1000).floor() % 60 < 10 ? 0 : ""}${(milliseconds / 1000).floor() % 60}";
-  //   return "$minutes:$seconds";
-  // }
-
   @override
   Widget build(BuildContext context) {
+    MusicCollection musicCollection = MusicCollection();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -107,67 +115,62 @@ class _PlayerScreenState extends State<PlayerScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 40,
-            ),
-            child: SingleChildScrollView(
-              // controller: ,
+          Expanded(
+            child: PageView.builder(
               scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 20,
+              controller: _controller,
+              itemCount: musicCollection.playList.length,
+              onPageChanged: (int index) {
+                setState(() {
+                  playing = false;
+                  currentIndex = index;
+                  getAudio(
+                    musicCollection.playList[currentIndex].musicPath,
+                  );
+                });
+              },
+              // itemCount: ,
+
+              itemBuilder: (_, i) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 40,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 5,
-                            offset: Offset(0, 1)),
-                      ],
-                      color: Colors.black,
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(
-                          widget.image,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black,
+                                blurRadius: 5,
+                                offset: Offset(0, 1)),
+                          ],
+                          color: Colors.black,
+                          image: DecorationImage(
+                            image: AssetImage(
+                              musicCollection.playList[i].songImage,
+                            ),
+                            fit: BoxFit.fill,
+                            // image: NetworkImage(
+                            //   widget.image,
+                            // ),
+                          ),
                         ),
                       ),
-                    ),
+                      SizedBox()
+                    ],
                   ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 5,
-                            offset: Offset(0, 1)),
-                      ],
-                      color: Colors.black,
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(
-                          widget.image,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                ],
-              ),
+                );
+              },
             ),
           ),
+          Text('${currentIndex}'),
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 10,
@@ -262,7 +265,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
               ),
               IconButton(
                 onPressed: () {
-                  getAudio();
+                  // print('${currentIndex}');
+                  setState(() {
+                    getAudio(
+                      musicCollection.playList[currentIndex].musicPath,
+                    );
+                  });
                 },
                 icon: playing
                     ? Icon(
@@ -275,7 +283,13 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    getAudio(
+                      musicCollection.playList[currentIndex + 1].musicPath,
+                    );
+                  });
+                },
                 icon: FaIcon(
                   FontAwesomeIcons.stepForward,
                   size: 30,
