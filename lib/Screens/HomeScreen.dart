@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:musicapp/widget/CustomCard.dart';
 import 'package:musicapp/widget/CustomTitleText.dart';
+import 'package:musicapp/widget/musicList.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,7 +9,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedItem = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -95,51 +95,6 @@ class HomeScreenWidget extends StatelessWidget {
 }
 
 // 'Popular Song'
-class MusicList extends StatelessWidget {
-  final String title;
-  MusicList({this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CustomTitleText(
-          title: title,
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              CustomCard(
-                height: 100,
-                width: 100,
-                image: 'assets/9868.jpg',
-              ),
-              CustomCard(
-                height: 100,
-                width: 100,
-                image: 'assets/1591.jpg',
-              ),
-              CustomCard(
-                height: 100,
-                width: 100,
-                image: 'assets/9868.jpg',
-              ),
-              CustomCard(
-                height: 100,
-                width: 100,
-                image: 'assets/1591.jpg',
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 // class CustomBottomNavigationBar extends StatefulWidget {
 //   final int defaultSelectedIndex;

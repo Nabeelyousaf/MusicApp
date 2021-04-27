@@ -33,20 +33,17 @@ class CustomCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Hero(
-                tag: 'image',
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage(
-                        image,
-                      ),
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage(
+                      image,
                     ),
                   ),
-                  height: height,
-                  width: width,
                 ),
+                height: height,
+                width: width,
               ),
             ),
             Padding(

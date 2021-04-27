@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// this Widget is use in PlayListScreen
+// and Title of the Album
 class CustomTitleText extends StatelessWidget {
   final String title;
   CustomTitleText({@required this.title});

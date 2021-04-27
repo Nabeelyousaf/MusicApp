@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:musicapp/Screens/albumClass.dart';
 
+// SongCollection
+// ALbums->AlbumName->Songs->SongName
+// data get from FireBase
 class SongCollection extends StatelessWidget {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   String musicName;

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:musicapp/Screens/HomeScreen.dart';
 import 'package:musicapp/Screens/SearchScreen.dart';
 
+// NavBar but i m not use anywhere
 class LandingPage extends StatefulWidget {
   @override
   _LandingPageState createState() => _LandingPageState();

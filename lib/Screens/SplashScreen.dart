@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+// SplashScreen
 
 class SplashScreen extends StatelessWidget {
   final Shader linearGradient = LinearGradient(

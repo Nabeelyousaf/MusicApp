@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:musicapp/Model/MusicName.dart';
+import 'package:musicapp/widget/BottomNavBar.dart';
 import 'package:musicapp/widget/CustomTitleText.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -97,6 +98,16 @@ class _PlayerScreenState extends State<PlayerScreen> {
   Widget build(BuildContext context) {
     MusicCollection musicCollection = MusicCollection();
     return Scaffold(
+      // bottomNavigationBar: CustomBottomNavigationBar(
+      //   iconList: [
+      //     Icons.home,
+      //     Icons.card_giftcard,
+      //     Icons.camera,
+      //     Icons.pie_chart,
+      //     Icons.person,
+      //   ],
+      //   onChange: (int) {},
+      // ),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         actions: [

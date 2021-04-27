@@ -111,3 +111,128 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     );
   }
 }
+
+// import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:pixinpreset/Constants/constants.dart';
+// import 'package:pixinpreset/Screens/accountScreen.dart';
+// import 'package:pixinpreset/Screens/featuredScreen.dart';
+// import 'package:pixinpreset/Screens/premiumScreen.dart';
+// import 'package:pixinpreset/Screens/searchScreen.dart';
+// import 'package:pixinpreset/Screens/wishListScreen.dart';
+// import 'package:pixinpreset/main.dart';
+
+// class HomeScreen extends StatefulWidget {
+//   @override
+//   _HomeScreenState createState() => _HomeScreenState();
+// }
+
+// class _HomeScreenState extends State<HomeScreen> {
+//   PageController pageController = new PageController();
+//   int currentIndex = 0;
+
+//   // FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+//   // String _message;
+//   // @override
+//   // void initState() {
+//   //   _firebaseMessaging.configure (
+//   //       onLaunch: (Map<String, dynamic> message) async {
+//   //     setState(() {
+//   //       _message = message['title'];
+//   //     });
+//   //   });
+//   //   super.initState();
+//   // }
+
+//   void onTap(int page) {
+//     setState(() {
+//       currentIndex = page;
+//     });
+//     pageController.jumpToPage(page);
+//   }
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     //TODO: enable it for notifications
+//     // var initializationSettingsAndroid =
+//     //     AndroidInitializationSettings('@mipmap/ic_launcher');
+//     // var initializationSettings =
+//     //     InitializationSettings(android: initializationSettingsAndroid);
+
+//     // flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+//     // FirebaseMessaging.onMessage.listen(
+//     //   (RemoteMessage message) {
+//     //     RemoteNotification notification = message.notification;
+//     //     AndroidNotification android = message.notification?.android;
+//     //     if (notification != null && android != null) {
+//     //       flutterLocalNotificationsPlugin.show(
+//     //         notification.hashCode,
+//     //         notification.title,
+//     //         notification.body,
+//     //         NotificationDetails(
+//     //           android: AndroidNotificationDetails(
+//     //             channel.id,
+//     //             channel.name,
+//     //             channel.description,
+//     //             icon: message.notification.android?.smallIcon,
+//     //           ),
+//     //         ),
+//     //       );
+//     //     }
+//     //   },
+//     // );
+
+//     // getToken();
+//   }
+
+//   getToken() async {
+//     String token = await FirebaseMessaging.instance.getToken();
+//     print('This is token here ::::::::::::::::::::::');
+//     print(token);
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: PageView(
+//         controller: pageController,
+//         onPageChanged: (index) {
+//           setState(() {
+//             currentIndex = index;
+//             debugPrint("${currentIndex}");
+//           });
+//         },
+//         children: [Featured(), Search(), Premium(), Wishlist(), Account()],
+//       ),
+//       bottomNavigationBar: BottomNavigationBar(
+//         onTap: onTap,
+//         backgroundColor: kBackGreyColor,
+//         selectedIconTheme: IconThemeData(color: kOrangeColor),
+//         selectedItemColor: kOrangeColor,
+//         unselectedIconTheme: IconThemeData(color: kWhiteColor),
+//         unselectedLabelStyle: TextStyle(color: kWhiteColor),
+//         iconSize: 26,
+//         selectedFontSize: 14,
+//         unselectedFontSize: 12,
+//         currentIndex: currentIndex,
+//         unselectedItemColor: kWhiteColor,
+//         showSelectedLabels: true,
+//         showUnselectedLabels: false,
+//         type: BottomNavigationBarType.fixed,
+//         items: [
+//           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Featured'),
+//           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+//           BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
+//           BottomNavigationBarItem(
+//               icon: Icon(EvaIcons.heartOutline), label: 'Wishlist'),
+//           BottomNavigationBarItem(
+//               icon: Icon(Icons.account_box), label: 'Account'),
+//         ],
+//       ),
+//     );
+//   }
+// }

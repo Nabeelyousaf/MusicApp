@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:musicapp/Screens/PlayerScreen.dart';
-import 'package:musicapp/Screens/ScrollerExample.dart';
+import 'package:musicapp/Screens/HomeScreen.dart';
+// import 'package:musicapp/Screens/PlayerScreen.dart';
+// import 'package:musicapp/Screens/ScrollerExample.dart';
 
-import 'Screens/playListScreen.dart';
+// import 'Screens/playListScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PlaylistScreen(),
+      home: Home(),
     );
   }
 }

@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:musicapp/Model/MusicName.dart';
 import 'package:musicapp/Screens/PlayerScreen.dart';
-import 'package:musicapp/Screens/albumClass.dart';
-import 'package:musicapp/widget/CustomTitleText.dart';
+import 'package:musicapp/widget/CustomDialog.dart';
+import 'package:musicapp/widget/customPlayListTile.dart';
+import 'package:flutter/material.dart';
+import 'package:musicapp/Model/MusicName.dart';
+import 'package:musicapp/widget/CustomPlayLIstHeader.dart';
+// this screen is the list of Songs
 
 class PlaylistScreen extends StatefulWidget {
   String imageUrl;
@@ -29,355 +28,244 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
     print(widget.musicUrl);
   }
 
+  bool _isVisible = true;
+
+  void showToast() {
+    setState(() {
+      _isVisible = !_isVisible;
+    });
+  }
+  // Dummy Collection of music in which name , image and path
+
   MusicCollection musicCollection = MusicCollection();
+
   FirebaseFirestore firebase = FirebaseFirestore.instance;
-  var dummy;
-  // final db = FirebaseFirestore.instance
-  //     .collection('Albums')
-  //     .doc()
-  //     .collection('Songs')
-  //     .doc()
-  //     .snapshots();
 
   bool pinned;
   @override
   Widget build(BuildContext context) {
-    Model model = Model(
-      albumtitle: widget.dummyData,
-    );
+    void showDialog() {
+      showGeneralDialog(
+        barrierLabel: "Barrier",
+        barrierDismissible: true,
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionDuration: Duration(milliseconds: 400),
+        context: context,
+        pageBuilder: (_, __, ___) {
+          return DialogBox();
+        },
+        transitionBuilder: (_, anim, __, child) {
+          return SlideTransition(
+            position:
+                Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+            child: child,
+          );
+        },
+      );
+    }
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Container(
-          child: StreamBuilder<QuerySnapshot>(
-              stream: firebase.collection('Albums').snapshots(),
-              builder: (context, snapShot) {
-                // int list = snapShot.data.docs.length;
-                DocumentSnapshot documentSnapshot = snapShot.data.docs[0];
-                widget.imageUrl = documentSnapshot.data()['CoverImage'];
-                widget.musicUrl = documentSnapshot.data()['path'];
-                widget.albumTitle = documentSnapshot.data()['AlbumTitle'];
-
-                if (snapShot.hasData) {
-                  // return ListView.builder(
-                  //   shrinkWrap: true,
-                  //   itemCount: list,
-                  //   itemBuilder: (context, index) {
-                  //     // dummy = documentSnapshot.data()['ArtistName'];
-                  // j
-                  return CustomScrollView(
-                    physics: BouncingScrollPhysics(),
-                    slivers: [
-                      SliverAppBar(
-                        leading: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.grey[800].withOpacity(0.5),
-                            child: IconButton(
-                              onPressed: () {
-                                // print(db);
-                                // print(dummy);
-                                print(model.albumtitle);
-                              },
-                              icon: Icon(
-                                Icons.chevron_left,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        actions: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0,
-                            ),
-                            child: CircleAvatar(
+        body: StreamBuilder<QuerySnapshot>(
+          stream: firebase.collection('Albums').snapshots(),
+          builder: (context, snapShot) {
+            if (snapShot.data == null) {
+              // if snapShort has not date then show CircularProgressIndicator
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              // return ListView.builder(
+              //   shrinkWrap: true,
+              //   itemCount: snapShot.data.docs.length,
+              //   itemBuilder: (context, index) {
+              DocumentSnapshot documentSnapshot = snapShot.data.docs[0];
+              widget.imageUrl = documentSnapshot.data()['CoverImage'];
+              widget.musicUrl = documentSnapshot.data()['path'];
+              widget.albumTitle = documentSnapshot.data()['AlbumTitle'];
+              return Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      // in this Screen i m use SliverApp bar
+                      child: CustomScrollView(
+                        physics: BouncingScrollPhysics(),
+                        slivers: [
+                          SliverAppBar(
+                            // SliverAPP Bar Icons Button BUt now i m not use functionality
+                            leading: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircleAvatar(
                                 backgroundColor:
                                     Colors.grey[800].withOpacity(0.5),
                                 child: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
                                   icon: Icon(
-                                    Icons.more_vert_sharp,
+                                    Icons.chevron_left,
                                     color: Colors.white,
                                   ),
-                                )),
-                          )
-                        ],
-                        backgroundColor: Colors.white,
-                        expandedHeight: 300,
-                        floating: true,
-                        pinned: true,
-                        elevation: 0,
-                        flexibleSpace: FlexibleSpaceBar(
-                          background: Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage('assets/91513.jpg'),
+                                ),
                               ),
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black,
-                                        blurRadius: 5,
-                                      ),
-                                    ],
-                                    image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: NetworkImage(''),
-                                    ),
-                                  ),
-                                  height: 200,
-                                  width: 200,
+                            actions: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0,
                                 ),
-                              ],
+                                child: CircleAvatar(
+                                    backgroundColor:
+                                        Colors.grey[800].withOpacity(0.5),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        showDialog();
+                                      },
+                                      icon: Icon(
+                                        Icons.more_vert_sharp,
+                                        color: Colors.white,
+                                      ),
+                                    )),
+                              )
+                            ],
+                            backgroundColor: Colors.white,
+                            expandedHeight: 300,
+                            floating: true,
+                            pinned: true,
+                            elevation: 0,
+                            flexibleSpace: FlexibleSpaceBar(
+                              background: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                        // SliverApp Bar Background image import from Assets Dummy data
+                                        'assets/91513.jpg'),
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black,
+                                            blurRadius: 5,
+                                          ),
+                                        ],
+                                        image: DecorationImage(
+                                          // Album Profile Image
+                                          fit: BoxFit.fill,
+                                          image: NetworkImage(
+                                            widget.imageUrl,
+                                          ),
+                                        ),
+                                      ),
+                                      height: 200,
+                                      width: 200,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
+                          ),
+                          CustomPlaylistHeader(
+                            title: widget.albumTitle,
+                            // Album title  import from firebase
+                          ),
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) {
+                                return CustomPlayListTile(
+                                  // Album list Tile in which give image and path of the song
+                                  image: widget.imageUrl,
+                                  musicUrl: widget.musicUrl,
+                                  title: widget.albumTitle,
+                                  function: () {
+                                    showDialog();
+                                  },
+                                );
+                              },
+                              childCount: musicCollection.playList.length,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: _isVisible,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => PlayerScreen(
+                                image: widget.imageUrl,
+                                musicUrl: widget.musicUrl,
+                                songTitle: widget.albumTitle,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          color: Colors.white,
+                          height: 50,
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                child: Container(
+                                  height: 40,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(widget.imageUrl),
+                                    ),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                'Song Name',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.play_arrow_outlined,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      CustomPlaylistHeader(
-                        title: widget.albumTitle,
-                      ),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            return CustomPlayListTile(
-                              image: widget.imageUrl,
-                              musicUrl: widget.musicUrl,
-                              title: widget.albumTitle,
-                              // title: 'hello',
-                            );
-                          },
-                          childCount: musicCollection.playList.length,
-                        ),
-                      ),
-                    ],
-                  );
-                } else {
-                  return LinearProgressIndicator();
-                }
-              }
-              // DocumentSnapshot data = snapShot.data.docs[0];
-              // dummy=data.data().['']
-
-              // DocumentSnapshot documentSnapshot = snapShot.data.docs[0];
-              // widget.imageUrl = documentSnapshot.data()['CoverImage'];
-              // widget.musicUrl = documentSnapshot.data()['path'];
-              // widget.albumTitle = documentSnapshot.data()['AlbumTitle'];
-              // dummy = documentSnapshot.data()['ArtistName'];
-
-              ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomPlayListTile extends StatelessWidget {
-  String image;
-  String musicUrl;
-  String title;
-  CustomPlayListTile({
-    this.image,
-    this.musicUrl,
-    this.title,
-  });
-  MusicCollection musicCollection = MusicCollection();
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        print('url:${musicUrl}');
-        print('url:${image}');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => PlayerScreen(
-              songTitle: title,
-              musicUrl: musicUrl,
-              image: image,
-            ),
-          ),
-        );
-      },
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 8,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 10,
-                ),
-                child: GestureDetector(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        musicCollection.getSongName(),
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                      Text(
-                        musicCollection.getSongDescription(),
-                        style: TextStyle(
-                          color: Colors.grey[500],
-                        ),
-                        textAlign: TextAlign.start,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 10,
-                ),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.download_outlined,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.more_vert_outlined,
-                      ),
-                    ),
+                    )
                   ],
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomPlaylistHeader extends StatelessWidget {
-  String title;
-  CustomPlaylistHeader({
-    this.title,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: FaIcon(
-                    FontAwesomeIcons.heart,
-                    color: Colors.pinkAccent,
-                    size: 30,
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: FaIcon(
-                    FontAwesomeIcons.playCircle,
-                    color: Colors.pinkAccent,
-                    size: 30,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Column(
-            children: [
-              CustomTitleText(
-                title: title,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    child: Text(
-                      'Description',
-                      style: TextStyle(
-                        color: Colors.grey[500],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  CustomIcon(
-                    iconData: Icons.file_download,
-                  ),
-                  CustomIcon(iconData: Icons.upload_outlined),
-                ],
-              )
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class CustomIcon extends StatelessWidget {
-  IconData iconData;
-  CustomIcon({this.iconData});
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8,
-        horizontal: 10,
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.yellow,
-          ),
-          color: Colors.grey,
-          borderRadius: BorderRadius.circular(
-            50,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(3),
-          child: Icon(
-            iconData,
-            size: 20,
-            color: Colors.white,
-          ),
+              );
+              //   },
+              // );
+            }
+          },
         ),
       ),
     );
