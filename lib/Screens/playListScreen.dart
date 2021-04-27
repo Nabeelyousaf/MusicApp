@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+import 'package:musicapp/Controller/PlayerController.dart';
 import 'package:musicapp/Screens/PlayerScreen.dart';
 import 'package:musicapp/widget/CustomDialog.dart';
 import 'package:musicapp/widget/customPlayListTile.dart';
@@ -8,6 +10,7 @@ import 'package:musicapp/widget/CustomPlayLIstHeader.dart';
 // this screen is the list of Songs
 
 class PlaylistScreen extends StatefulWidget {
+  final PressedState pressController = Get.put(PressedState());
   String imageUrl;
   String musicUrl;
   String albumTitle;
@@ -42,6 +45,13 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
   FirebaseFirestore firebase = FirebaseFirestore.instance;
 
   bool pinned;
+  bool change = false;
+  void changebutton() {
+    setState(() {
+      change = !change;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     void showDialog() {
@@ -248,9 +258,11 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                                   vertical: 4,
                                 ),
                                 child: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    changebutton();
+                                  },
                                   icon: Icon(
-                                    Icons.play_arrow_outlined,
+                                    change ? Icons.play_arrow : Icons.pause,
                                   ),
                                 ),
                               ),

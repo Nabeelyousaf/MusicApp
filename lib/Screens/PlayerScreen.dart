@@ -2,7 +2,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:musicapp/Model/MusicName.dart';
-import 'package:musicapp/widget/BottomNavBar.dart';
 import 'package:musicapp/widget/CustomTitleText.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -71,9 +70,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
     audioPlayer.seek(newDuration);
   }
 
+// Audio player Function
   void getAudio(String url) async {
-    // String url = widget.musicUrl;
-    // print(widget.musicUrl);
     if (playing) {
       var res = await audioPlayer.pause();
       if (res == 1) {
