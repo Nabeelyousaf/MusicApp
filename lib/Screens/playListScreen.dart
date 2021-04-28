@@ -26,11 +26,6 @@ class PlaylistScreen extends StatefulWidget {
 
 class _PlaylistScreenState extends State<PlaylistScreen> {
   @override
-  void initState() {
-    super.initState();
-    print(widget.musicUrl);
-  }
-
   bool _isVisible = true;
 
   void showToast() {

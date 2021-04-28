@@ -5,6 +5,7 @@ import 'package:musicapp/Screens/HomeScreen.dart';
 import 'package:musicapp/Screens/playListScreen.dart';
 
 import 'Controller/PlayerController.dart';
+import 'widget/BottomNavBar.dart';
 // import 'package:musicapp/Screens/PlayerScreen.dart';
 // import 'package:musicapp/Screens/ScrollerExample.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PlaylistScreen(),
+      home: HomeScreen(),
     );
   }
 }

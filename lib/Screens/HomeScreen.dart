@@ -23,72 +23,140 @@ class _HomeState extends State<Home> {
 class HomeScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          MusicList(
-            title: 'Popular Song',
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 200,
+                width: double.infinity,
+                color: Colors.grey[300],
+                child: Stack(
+                  children: [],
+                ),
+              ),
+              MusicList(
+                title: 'Popular Song',
+              ),
+              CustomTitleText(
+                title: 'Recently Played',
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CustomCard(
+                      height: 150,
+                      width: 150,
+                      image: 'assets/1591.jpg',
+                    ),
+                    CustomCard(
+                      height: 150,
+                      width: 150,
+                      image: 'assets/9868.jpg',
+                    ),
+                    CustomCard(
+                      height: 150,
+                      width: 150,
+                      image: 'assets/1591.jpg',
+                    ),
+                    CustomCard(
+                      height: 150,
+                      width: 150,
+                      image: 'assets/9868.jpg',
+                    ),
+                  ],
+                ),
+              ),
+              CustomTitleText(
+                title: 'Pop',
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CustomCard(
+                      height: 100,
+                      width: 100,
+                      image: 'assets/9868.jpg',
+                    ),
+                    CustomCard(
+                      height: 100,
+                      width: 100,
+                      image: 'assets/1591.jpg',
+                    ),
+                    CustomCard(
+                      height: 100,
+                      width: 100,
+                      image: 'assets/9868.jpg',
+                    ),
+                    CustomCard(
+                      image: 'assets/1591.jpg',
+                    ),
+                  ],
+                ),
+              ),
+              CustomTitleText(
+                title: 'Pop',
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CustomCard(
+                      height: 100,
+                      width: 100,
+                      image: 'assets/9868.jpg',
+                    ),
+                    CustomCard(
+                      height: 100,
+                      width: 100,
+                      image: 'assets/1591.jpg',
+                    ),
+                    CustomCard(
+                      height: 100,
+                      width: 100,
+                      image: 'assets/9868.jpg',
+                    ),
+                    CustomCard(
+                      image: 'assets/1591.jpg',
+                    ),
+                  ],
+                ),
+              ),
+              CustomTitleText(
+                title: 'Pop',
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CustomCard(
+                      height: 100,
+                      width: 100,
+                      image: 'assets/9868.jpg',
+                    ),
+                    CustomCard(
+                      height: 100,
+                      width: 100,
+                      image: 'assets/1591.jpg',
+                    ),
+                    CustomCard(
+                      height: 100,
+                      width: 100,
+                      image: 'assets/9868.jpg',
+                    ),
+                    CustomCard(
+                      image: 'assets/1591.jpg',
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          CustomTitleText(
-            title: 'Recently Played',
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                CustomCard(
-                  height: 150,
-                  width: 150,
-                  image: 'assets/1591.jpg',
-                ),
-                CustomCard(
-                  height: 150,
-                  width: 150,
-                  image: 'assets/9868.jpg',
-                ),
-                CustomCard(
-                  height: 150,
-                  width: 150,
-                  image: 'assets/1591.jpg',
-                ),
-                CustomCard(
-                  height: 150,
-                  width: 150,
-                  image: 'assets/9868.jpg',
-                ),
-              ],
-            ),
-          ),
-          CustomTitleText(
-            title: 'Pop',
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                CustomCard(
-                  height: 100,
-                  width: 100,
-                  image: 'assets/9868.jpg',
-                ),
-                CustomCard(
-                  height: 100,
-                  width: 100,
-                  image: 'assets/1591.jpg',
-                ),
-                CustomCard(
-                  height: 100,
-                  width: 100,
-                  image: 'assets/9868.jpg',
-                ),
-                CustomCard(
-                  image: 'assets/1591.jpg',
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
