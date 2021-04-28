@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         children: [
-          HomeScreenWidget(),
+          LandingPageScreenWidget(),
           PlaylistScreen(),
           PlayerScreen(),
           // Wishlist(),
@@ -46,9 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTap,
         backgroundColor: Colors.white,
-        selectedIconTheme: IconThemeData(color: Colors.grey),
-        selectedItemColor: Colors.grey[700],
-        unselectedIconTheme: IconThemeData(color: Colors.grey),
+        selectedIconTheme: IconThemeData(color: Colors.grey[900]),
+        selectedItemColor: Colors.grey,
+        unselectedIconTheme: IconThemeData(color: Colors.grey[400]),
         unselectedLabelStyle: TextStyle(color: Colors.grey),
         iconSize: 26,
         selectedFontSize: 10,
@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined), label: 'Featured'),
+              icon: Icon(Icons.home_outlined), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
           BottomNavigationBarItem(
               icon: Icon(Icons.explore_outlined), label: 'Explore'),

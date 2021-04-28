@@ -10,7 +10,7 @@ import 'package:musicapp/widget/CustomPlayLIstHeader.dart';
 // this screen is the list of Songs
 
 class PlaylistScreen extends StatefulWidget {
-  final PressedState pressController = Get.put(PressedState());
+  // final PressedState pressController = Get.put(PressedState());
   String imageUrl;
   String musicUrl;
   String albumTitle;

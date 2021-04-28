@@ -3,24 +3,23 @@ import 'package:musicapp/widget/CustomCard.dart';
 import 'package:musicapp/widget/CustomTitleText.dart';
 import 'package:musicapp/widget/musicList.dart';
 
-class Home extends StatefulWidget {
+class LandingPage extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _LandingPageState createState() => _LandingPageState();
 }
 
-class _HomeState extends State<Home> {
+class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // bottomNavigationBar: CustomBottomNav(),
-        body: HomeScreenWidget(),
-      ),
+          // bottomNavigationBar: CustomBottomNav(),
+          body: LandingPageScreenWidget()),
     );
   }
 }
 
-class HomeScreenWidget extends StatelessWidget {
+class LandingPageScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

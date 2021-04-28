@@ -28,26 +28,26 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Exp extends StatelessWidget {
-  final PressedState pressController = Get.put(PressedState());
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: MaterialButton(
-          onPressed: () {
-            pressController.changeStatus();
-          },
-          child: GetBuilder<PressedState>(
-            init: PressedState(),
-            builder: (pressController) {
-              return pressController.pressedBool
-                  ? Icon(Icons.play_arrow)
-                  : Icon(Icons.pause);
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
+// class Exp extends StatelessWidget {
+//   final PressedState pressController = Get.put(PressedState());
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: MaterialButton(
+//           onPressed: () {
+//             pressController.changeStatus();
+//           },
+//           child: GetBuilder<PressedState>(
+//             init: PressedState(),
+//             builder: (pressController) {
+//               return pressController.pressedBool
+//                   ? Icon(Icons.play_arrow)
+//                   : Icon(Icons.pause);
+//             },
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
